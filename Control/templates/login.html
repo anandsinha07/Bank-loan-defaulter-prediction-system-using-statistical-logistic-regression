@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% include "snippets/css/login.html" %}
+<div class="jumbotron" style="margin:0;height:94vh;" id="hero">
+	<div class="container h-100" style="width:90%;">
+	  <div class="row h-100">
+	    <div class="card col-4 mx-auto my-auto align-middle" id="form-card">
+	      <div class="card-body">
+	        <h3 class="card-title">Login</h3>
+	        <hr>
+	        <form method="post" action="">
+	          {% csrf_token %}
+	          {{ form.as_p }}
+ 			<button type="submit" class="btn btn-primary float-right">Login</button>
+	        </form>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
+
+<script type="text/javascript">
+history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+    };
+</script>
+
+{% endblock content %}

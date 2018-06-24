@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="jumbotron" style="margin:0;height:94vh;">
+	<h4><a href="../">Go to Dashboard</a></h4>
+	<div class="container h-90">
+	  <div class="row h-100">
+	    <div class="card mx-auto my-auto align-middle" id="form-card" style="width:55%;">
+	      <div class="card-body">
+	        <h3 class="card-title">Model Details</h3>
+	        <p class="card-text">
+	        	<table class="table">
+	        		<tr>
+	        			<td>Last Modified:</td>
+	        			<td>{{last_modified}}</td>
+	        		</tr>
+	        		<tr>
+	        			<td>No. of entries:</td>
+	        			<td>{{entries}}</td>
+	        		</tr>
+	        	</table>
+	        </p>
+	        <form>
+	          <p>
+		          <button type="submit" class="btn btn-primary">Train Model</button>
+		          <button type="button" class="btn btn-success" onclick="gotoURL('../Prediction/')">Predict</button>&nbsp;
+	          </p>
+	        </form>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
+
+{% include "js/js.html" %}
+
+{% endblock content %}

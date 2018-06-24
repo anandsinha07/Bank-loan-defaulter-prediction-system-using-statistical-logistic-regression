@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="jumbotron" style="margin:0;height:94vh;">
+	<h4><a href="../">Go to Dashboard</a></h4>
+	<div class="container h-100">
+	  <div class="row h-100">
+	    <div class="card mx-auto my-auto align-middle" id="form-card" style="width:75%;">
+	      <div class="card-body">
+	        <h3 class="card-title">Customer Details</h3>
+	        <hr>
+	        <form id="prediction_form" method="POST">
+	          {% csrf_token %}
+	          <div class="form-group form-row">
+	            <div class="col">
+		            <label for="username" style="text-align:left;">Username</label>
+		            <input type="text" class="form-control" id="username" placeholder="Username" name="user" required>
+		        </div>
+	            <div class="col">
+		            <label for="loan" style="text-align:left;">Loan Amount</label>
+		            <input type="number" class="form-control" id="loan" placeholder="Loan Amount" name="loan" required>
+		        </div>
+	          </div>
+ 	          <div class="form-group form-row">
+	          	<div class="col">
+		            <label for="interest-rate" style="text-align:left;">Interest Rate</label>
+		            <input type="number" class="form-control" id="interest-rate" placeholder="Interest Rate" name="interest-rate" required>
+	            </div>
+	            <div class="col">
+		            <label for="emp_length" style="text-align:left;">Emp_Length</label>
+		            <input type="number" class="form-control" id="emp_length" placeholder="Emp_Length" required>
+	          	</div>
+	          </div>
+	          <div class="form-group form-row">
+	            <div class="col">
+		            <label for="annual-income" style="text-align:left;">Annual Income</label>
+		            <input type="number" class="form-control" id="annual-income" placeholder="Annual Income" required>
+		        </div>
+	            <div class="col">
+		            <label for="dti" style="text-align:left;">Debt to Income Ratio</label>
+		            <input type="number" class="form-control" id="dti" placeholder="Debt/Income Ratio" required>
+		        </div>
+	          </div>
+	          <div class="form-group form-row">
+	          	<div class="col">
+		            <label for="delinq_2yrs" style="text-align:left;">Delinquent_2yrs</label>
+		            <input type="number" class="form-control" id="delinq_2yrs" placeholder="Delinquent_2yrs" required>
+	            </div>
+	            <div class="col">
+		            <label for="revol_util" style="text-align:left;">Revol_util</label>
+		            <input type="number" class="form-control" id="revol_util" placeholder="Revol_util" required>
+	          	</div>
+	          </div>
+	          <div class="form-group form-row">
+	          	<div class="col">
+		            <label for="total_acc" style="text-align:left;">Total Accounts</label>
+		            <input type="number" class="form-control" id="total_acc" placeholder="Total Accounts" required>
+	            </div>
+	          	<div class="col">
+		            <label for="longest_cr_len" style="text-align:left;">Longest Credit Length</label>
+		            <input type="number" class="form-control" id="longest_cr_length" placeholder="Longest Credit length" required>
+	            </div>
+ 	          </div><br>{{Prediction}}<br>
+	          <p>
+	          <button type="submit" class="btn btn-primary">Predict</button>
+	          <button type="submit" class="btn btn-success" onclick="gotoURL('../Train/')">Train Model</button>&nbsp;
+	          </p>
+	        </form>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+
+$(document).on("submit", "#prediction_form", function(e) {
+		e.preventDefault();
+
+		$.ajax({
+			type:'POST',
+			url:'predict/',
+			data: {
+				loan:$('#loan').val(),
+				irate:$('#interest-rate').val(),
+				emp_length:$('#emp_length').val(),
+				annual_income:$('#annual-income').val(),
+				dti:$('#dti').val(),
+				del_2yrs:$('#delinq_2yrs').val(),
+				revol_util:$('#revol_util').val(),
+				total_acc:$('#total_acc').val(),
+				longest_cr_length:$('#longest_cr_length').val(),
+				csrfmiddlewaretoken:$("input[name=csrfmiddlewaretoken]").val()
+			},
+			success:function(data) {
+				if (data === '0') {
+					alert("Eligible for Loan");
+				}
+				else {
+					alert("Not Eligible for Loan");
+				}
+			}
+		})
+});
+
+</script>
+
+{% include "js/js.html" %}
+
+{% endblock content %}
